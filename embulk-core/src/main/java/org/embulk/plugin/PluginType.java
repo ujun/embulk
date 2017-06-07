@@ -44,8 +44,15 @@ public abstract class PluginType
                 final String name = object.get("name");
                 return createFromString(name);
             }
+        case MAVEN:
+            {
+                final String name = object.get("name");
+                final String group = object.get("group");
+                final String version = object.get("version");
+                return MavenPluginType.create(name, group, version);
+            }
         default:
-            throw new IllegalArgumentException("\"source\" must be one of: [\"default\"]");
+            throw new IllegalArgumentException("\"source\" must be one of: [\"default\", \"maven\"]");
         }
     }
 
@@ -74,6 +81,7 @@ public abstract class PluginType
     }
 
     private static final String DEFAULT = "default";
+    private static final String MAVEN = "maven";
 
     private final String source;
     private final String name;
